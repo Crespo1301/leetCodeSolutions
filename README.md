@@ -6,7 +6,8 @@ A collection of my LeetCode problem solutions with explanations and complexity a
 
 | # | Problem | Difficulty | Solution | Topics |
 |---|---------|------------|----------|--------|
-| 1 | [Two Sum](https://leetcode.com/problems/two-sum/) | Easy | [Java](https://github.com/Crespo1301/leetCodeSolutions/blob/main/Java/Two%20Sum) | Array, Hash Map |
+| 1 | [Two Sum](https://leetcode.com/problems/two-sum/) | Easy | [Java](./Java/Two%20Sum.java) | Array, Hash Map |
+| 125 | [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | Easy | [Java](./Java/ValidPalindrome.java) | String, Two Pointers |
 
 ## Solutions
 
@@ -51,14 +52,48 @@ public class Solution
 
 ---
 
+### 125. Valid Palindrome
+
+**Problem:** Given a string `s`, return `true` if it is a palindrome, considering only alphanumeric characters and ignoring case.
+
+**Approach:** Two Pointers
+
+First, normalize the string by converting to lowercase and removing all non-alphanumeric characters. Then compare characters from both ends moving toward the center.
+
+```java
+import java.util.HashMap;
+
+public class ValidPalindrome
+{
+    public boolean isPalindrome(String s) 
+    {
+        s = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+        for(int i = 0; i < s.length() / 2; i++)
+        {
+            if(s.charAt(i) != s.charAt(s.length() - 1 - i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+**Complexity Analysis:**
+- **Time:** O(n) — Linear pass to clean string, then half-pass to compare
+- **Space:** O(n) — New string created after removing non-alphanumeric characters
+
+---
+
 ## Repository Structure
 
 ```
 leetcode-solutions/
 ├── README.md
 ├── Java/
-│   └── 001-two-sum/
-│       └── Solution.java
+│   ├── Two Sum.java
+│   └── ValidPalindrome.java
 └── ...
 ```
 
@@ -68,3 +103,5 @@ leetcode-solutions/
 |-------|----------|
 | Array | [1](#1-two-sum) |
 | Hash Map | [1](#1-two-sum) |
+| String | [125](#125-valid-palindrome) |
+| Two Pointers | [125](#125-valid-palindrome) |
