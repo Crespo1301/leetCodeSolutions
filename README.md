@@ -7,6 +7,7 @@ A collection of my LeetCode problem solutions with explanations and complexity a
 | # | Problem | Difficulty | Solution | Topics |
 |---|---------|------------|----------|--------|
 | 1 | [Two Sum](https://leetcode.com/problems/two-sum/) | Easy | [Java](./Java/Two%20Sum.java) | Array, Hash Map |
+| 20 | [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) | Easy | [Java](./Java/ValidParentheses.java) | String, Stack |
 | 125 | [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) | Easy | [Java](./Java/ValidPalindrome.java) | String, Two Pointers |
 
 ## Solutions
@@ -20,7 +21,6 @@ A collection of my LeetCode problem solutions with explanations and complexity a
 Instead of using a brute-force O(n²) approach with nested loops, this solution uses a hash map to achieve O(n) time complexity.
 
 The key insight is that for each number `nums[i]`, we need to find if `target - nums[i]` exists in the array. By storing previously seen numbers in a hash map, we can check this in O(1) time.
-
 ```java
 import java.util.HashMap;
 
@@ -52,6 +52,57 @@ public class Solution
 
 ---
 
+### 20. Valid Parentheses
+
+**Problem:** Given a string `s` containing just the characters `(`, `)`, `{`, `}`, `[` and `]`, determine if the input string is valid. Brackets must close in the correct order.
+
+**Approach:** Stack
+
+The key insight is that the most recently opened bracket must be closed first — this is a LIFO (last in, first out) pattern, which is exactly what a stack does.
+
+Walk through the string left to right. Push opening brackets onto the stack. When you see a closing bracket, pop from the stack and check if it matches. If the stack is empty at the end, all brackets were matched.
+```java
+import java.util.Stack;
+
+public class ValidParentheses
+{
+    public boolean isValid(String s) 
+    {
+        Stack<Character> stack = new Stack<>();
+        
+        for (char c : s.toCharArray()) 
+        {
+            if (c == '(' || c == '[' || c == '{') 
+            {
+                stack.push(c);
+            }
+            else 
+            {
+                if (stack.isEmpty()) 
+                {
+                    return false;
+                }   
+                char top = stack.pop();
+                if ((c == ')' && top != '(') ||
+                    (c == ']' && top != '[') ||
+                    (c == '}' && top != '{')) 
+                {
+                    return false;
+                }             
+            }
+        }
+        
+        return stack.isEmpty();
+    }
+}
+```
+
+**Complexity Analysis:**
+- **Time:** O(n) — Single pass through the string
+- **Space:** O(n) — Stack stores up to n/2 opening brackets in worst case
+
+---
+
 ### 125. Valid Palindrome
 
 **Problem:** Given a string `s`, return `true` if it is a palindrome, considering only alphanumeric characters and ignoring case.
@@ -59,7 +110,6 @@ public class Solution
 **Approach:** Two Pointers
 
 First, normalize the string by converting to lowercase and removing all non-alphanumeric characters. Then compare characters from both ends moving toward the center.
-
 ```java
 import java.util.HashMap;
 
@@ -87,12 +137,12 @@ public class ValidPalindrome
 ---
 
 ## Repository Structure
-
 ```
 leetcode-solutions/
 ├── README.md
 ├── Java/
 │   ├── Two Sum.java
+│   ├── ValidParentheses.java
 │   └── ValidPalindrome.java
 └── ...
 ```
@@ -103,5 +153,6 @@ leetcode-solutions/
 |-------|----------|
 | Array | [1](#1-two-sum) |
 | Hash Map | [1](#1-two-sum) |
-| String | [125](#125-valid-palindrome) |
+| Stack | [20](#20-valid-parentheses) |
+| String | [20](#20-valid-parentheses), [125](#125-valid-palindrome) |
 | Two Pointers | [125](#125-valid-palindrome) |
